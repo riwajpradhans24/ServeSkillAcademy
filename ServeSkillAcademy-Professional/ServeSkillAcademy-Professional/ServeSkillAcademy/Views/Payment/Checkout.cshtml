@@ -1,0 +1,35 @@
+@model Course
+@{ ViewData["Title"] = "Secure Checkout"; }
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-5 checkout-summary">
+                        <img src="@(Model.ThumbnailUrl ?? "/images/course-placeholder.jpg")" class="w-100" style="height:260px;object-fit:cover" />
+                        <div class="p-4">
+                            <span class="badge bg-dark mb-2">@Model.Level Course</span>
+                            <h3>@Model.Title</h3>
+                            <p class="text-muted">@Model.DurationDays days guided learning pathway</p>
+                            <div class="display-6 fw-bold">NPR @Model.Price.ToString("N0")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 p-4 p-lg-5">
+                        <h2 class="fw-bold">Choose payment method</h2>
+                        <p class="text-muted">Your course unlocks after the payment is verified.</p>
+                        <form asp-action="Checkout" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="courseId" value="@Model.CourseId" />
+                            <div class="payment-option mb-3"><input class="form-check-input" type="radio" name="paymentMethod" value="eSewa" id="esewa" checked><label class="form-check-label w-100" for="esewa"><strong>eSewa</strong><span>Pay through your eSewa account.</span></label></div>
+                            <div class="payment-option mb-3"><input class="form-check-input" type="radio" name="paymentMethod" value="Bank Transfer" id="bank"><label class="form-check-label w-100" for="bank"><strong>Bank Transfer</strong><span>Transfer to the academy account and submit your reference.</span></label></div>
+                            <div class="payment-option mb-3"><input class="form-check-input" type="radio" name="paymentMethod" value="Credit/Debit Card" id="card"><label class="form-check-label w-100" for="card"><strong>Credit / Debit Card</strong><span>Ready for a PCI-compliant card gateway integration.</span></label></div>
+                            <div class="mb-3"><label class="form-label">Transaction / reference number <span class="text-muted">(optional for eSewa/card)</span></label><input name="transactionReference" class="form-control" placeholder="e.g. eSewa or bank reference" /></div>
+                            <button class="btn btn-ss-primary btn-lg w-100">Continue Payment</button>
+                        </form>
+                        <div class="small text-muted mt-3">Never enter your card number, CVV or PIN into this website. Production card payments should be processed by a certified payment gateway.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@model ProfileViewModel
+@{ ViewData["Title"] = "My Profile"; }
+
+<div class="container py-5" style="max-width: 480px;">
+    <h1 class="mb-4">My Profile</h1>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Profile" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input value="@Model.Email" class="form-control" disabled />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Workplace" class="form-label"></label>
+            <input asp-for="Workplace" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Role</label>
+            <input value="@Model.Role" class="form-control" disabled />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Member Since</label>
+            <input value="@Model.CreatedAt.ToString("dd MMM yyyy")" class="form-control" disabled />
+        </div>
+        <button type="submit" class="btn btn-ss-primary w-100">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

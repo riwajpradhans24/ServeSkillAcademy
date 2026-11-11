@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|d:\\4th assignment\\.net\\serveskillacademy-professional\\serveskillacademy\\serveskillacademy\\about.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|solutionrelative:serveskillacademy\\about.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|d:\\4th assignment\\.net\\serveskillacademy-professional\\serveskillacademy\\serveskillacademy\\contact.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|solutionrelative:serveskillacademy\\contact.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|d:\\4th assignment\\.net\\serveskillacademy-professional\\serveskillacademy\\serveskillacademy\\about.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|solutionrelative:serveskillacademy\\about.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|d:\\4th assignment\\.net\\serveskillacademy-professional\\serveskillacademy\\serveskillacademy\\viewswitcher.ascx||{F390D63C-F7D8-4E74-AA04-57C1ECF53D4D}",
+      "RelativeMoniker": "D:0:0:{F1ADE051-E231-4E35-B216-CF16571762B1}|ServeSkillAcademy\\ServeSkillAcademy.csproj|solutionrelative:serveskillacademy\\viewswitcher.ascx||{F390D63C-F7D8-4E74-AA04-57C1ECF53D4D}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Contact.aspx",
+              "DocumentMoniker": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\Contact.aspx",
+              "RelativeDocumentMoniker": "ServeSkillAcademy\\Contact.aspx",
+              "ToolTip": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\Contact.aspx",
+              "RelativeToolTip": "ServeSkillAcademy\\Contact.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-09-25T07:41:29.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "About.aspx.cs",
+              "DocumentMoniker": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\About.aspx.cs",
+              "RelativeDocumentMoniker": "ServeSkillAcademy\\About.aspx.cs",
+              "ToolTip": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\About.aspx.cs",
+              "RelativeToolTip": "ServeSkillAcademy\\About.aspx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-25T07:40:21.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ViewSwitcher.ascx",
+              "DocumentMoniker": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\ViewSwitcher.ascx",
+              "RelativeDocumentMoniker": "ServeSkillAcademy\\ViewSwitcher.ascx",
+              "ToolTip": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\ViewSwitcher.ascx",
+              "RelativeToolTip": "ServeSkillAcademy\\ViewSwitcher.ascx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003302|",
+              "WhenOpened": "2026-09-25T07:31:50.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "About.aspx",
+              "DocumentMoniker": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\About.aspx",
+              "RelativeDocumentMoniker": "ServeSkillAcademy\\About.aspx",
+              "ToolTip": "D:\\4th Assignment\\.net\\ServeSkillAcademy-Professional\\ServeSkillAcademy\\ServeSkillAcademy\\About.aspx",
+              "RelativeToolTip": "ServeSkillAcademy\\About.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-09-25T07:31:09.318Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

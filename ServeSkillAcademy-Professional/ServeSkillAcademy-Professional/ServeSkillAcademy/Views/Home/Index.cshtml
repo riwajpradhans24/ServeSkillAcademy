@@ -1,0 +1,231 @@
+@model List<Course>
+
+@{
+    ViewData["Title"] = "Professional Hospitality Learning";
+}
+
+<section class="home-hero">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+                <span class="hero-kicker">
+                    SERVESKILL ACADEMY · PRACTICAL LEARNING
+                </span>
+
+                <h1>
+                    Build hospitality skills that feel ready for the real workplace.
+                </h1>
+
+                <p class="lead">
+                    Structured multi-day pathways with chapter-based lessons,
+                    learning videos, professional quizzes, progress tracking
+                    and achievement badges.
+                </p>
+
+                <div class="d-flex gap-3 flex-wrap">
+                    <a class="btn btn-ss-primary btn-lg"
+                       asp-action="Courses">
+                        Explore learning pathways
+                    </a>
+
+                    <a class="btn btn-outline-dark btn-lg"
+                       asp-controller="Account"
+                       asp-action="Register">
+                        Start free
+                    </a>
+                </div>
+
+                <div class="hero-trust mt-4">
+                    <span>✓ Basic courses are free</span>
+                    <span>✓ Advanced courses are paid</span>
+                    <span>✓ eSewa · Bank · Card</span>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="hero-visual">
+
+                    <img src="/images/Hero_Hospitality.jpg"
+                         alt="Hospitality learning illustration" />
+
+                    <div class="floating-card card-one">
+                        🏅
+                        <strong>Earn badges</strong>
+                        <small>Complete + pass</small>
+                    </div>
+
+                    <div class="floating-card card-two">
+                        🎬
+                        <strong>Learn with video</strong>
+                        <small>Admin-curated library</small>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- FEATURED COURSES -->
+<section class="container py-5">
+
+    <div class="section-heading">
+
+        <div>
+            <span class="eyebrow">FEATURED PATHWAYS</span>
+            <h2>Learn by doing</h2>
+        </div>
+
+        <a class="btn btn-outline-dark"
+           asp-action="Courses">
+            View all courses
+        </a>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        @foreach (var course in Model)
+        {
+            <div class="col-md-6 col-xl-4">
+
+                <div class="course-card premium-card h-100">
+
+                    <!-- COURSE IMAGE -->
+                    <div class="course-image-wrap">
+
+                        <img src="@course.ThumbnailUrl"
+                             alt="@course.Title"
+                             class="course-card-img"
+                             onerror="this.onerror=null; this.src='/images/course-placeholder.jpg';" />
+
+                        <span class="course-badge">
+                            @course.Level
+                        </span>
+
+                    </div>
+
+
+                    <!-- COURSE INFORMATION -->
+                    <div class="p-4 d-flex flex-column h-100">
+
+                        <div class="small text-muted">
+                            @(course.Category?.Name ?? "Hospitality")
+                            ·
+                            @course.DurationDays days
+                        </div>
+
+                        <h4 class="mt-2">
+                            @course.Title
+                        </h4>
+
+                        <p class="text-muted">
+                            @if (!string.IsNullOrEmpty(course.Description))
+                            {
+                                @(course.Description.Length > 125
+                                    ? course.Description[..125] + "…"
+                                    : course.Description)
+                            }
+                        </p>
+
+
+                        <!-- COURSE STATS -->
+                        <div class="course-stats">
+
+                            <span>
+                                📖 @(course.Lessons?.Count ?? 0) chapters
+                            </span>
+
+                            <span>
+                                🎬 @(course.Videos?.Count ?? 0) videos
+                            </span>
+
+                        </div>
+
+
+                        <!-- PRICE + BUTTON -->
+                        <div class="mt-auto d-flex justify-content-between align-items-center pt-3">
+
+                            <strong>
+                                @(course.Price == 0
+                                    ? "FREE"
+                                    : $"NPR {course.Price:N0}")
+                            </strong>
+
+                            <a class="btn btn-outline-dark"
+                               asp-action="CourseDetails"
+                               asp-route-id="@course.CourseId">
+                                View pathway
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</section>
+
+
+<!-- ACADEMY FEATURES -->
+<section class="academy-strip">
+
+    <div class="container py-5">
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="feature-tile">
+                    <span>01</span>
+                    <h5>Chapter-based</h5>
+                    <p>
+                        Three focused chapters every learning day.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="feature-tile">
+                    <span>02</span>
+                    <h5>Real-world practice</h5>
+                    <p>
+                        Scenarios, checklists and reflection tasks.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="feature-tile">
+                    <span>03</span>
+                    <h5>Video learning</h5>
+                    <p>
+                        Admin-curated videos sit alongside the curriculum.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="feature-tile">
+                    <span>04</span>
+                    <h5>Earn certification</h5>
+                    <p>
+                        Finish the pathway and pass the assessment
+                        to unlock a badge.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

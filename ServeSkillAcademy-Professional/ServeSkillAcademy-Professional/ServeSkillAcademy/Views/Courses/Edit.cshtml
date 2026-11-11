@@ -1,0 +1,45 @@
+@model CourseFormViewModel
+@{ ViewData["Title"] = "Edit Course"; }
+
+<h1 class="mb-4">Edit Course</h1>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="Edit" asp-route-id="@Model.CourseId" method="post" enctype="multipart/form-data" style="max-width:600px;">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="CourseId" />
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ExistingThumbnailUrl))
+    {
+        <img src="@Model.ExistingThumbnailUrl" style="max-height:100px;" class="d-block mb-2 rounded" />
+    }
+    <div class="row g-3 mb-3">
+        <div class="col-md-4"><label asp-for="Level" class="form-label"></label><select asp-for="Level" class="form-select"><option>Basic</option><option>Advanced</option></select></div>
+        <div class="col-md-4"><label asp-for="Price" class="form-label"></label><input asp-for="Price" class="form-control" type="number" min="0" step="0.01" /></div>
+        <div class="col-md-4"><label asp-for="DurationDays" class="form-label"></label><input asp-for="DurationDays" class="form-control" type="number" min="1" /></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ThumbnailFile" class="form-label">Replace Thumbnail Image</label>
+        <input asp-for="ThumbnailFile" type="file" class="form-control" accept="image/*" />
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="IsPublished" class="form-check-input" />
+        <label asp-for="IsPublished" class="form-check-label">Published</label>
+    </div>
+    <button type="submit" class="btn btn-ss-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

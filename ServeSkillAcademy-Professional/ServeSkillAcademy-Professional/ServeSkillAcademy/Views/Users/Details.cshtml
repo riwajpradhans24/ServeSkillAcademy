@@ -1,0 +1,34 @@
+@model ApplicationUser
+@{
+    ViewData["Title"] = "User Details";
+    var roles = ViewBag.Roles as IList<string>;
+}
+
+<h1 class="mb-4">@Model.FullName</h1>
+<div class="card ss-card p-4 mb-4" style="max-width:500px;">
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Workplace:</strong> @(Model.Workplace ?? "—")</p>
+    <p><strong>Current Role(s):</strong> @string.Join(", ", roles ?? new List<string>())</p>
+    <p><strong>Joined:</strong> @Model.CreatedAt.ToString("dd MMM yyyy")</p>
+    <p><strong>Status:</strong> @(Model.IsActive ? "Active" : "Deactivated")</p>
+</div>
+
+<div class="d-flex gap-4">
+    <form asp-action="ChangeRole" asp-route-id="@Model.Id" method="post" class="d-flex gap-2">
+        @Html.AntiForgeryToken()
+        <select name="newRole" class="form-select">
+            <option value="Learner" selected="@(Model.Role == "Learner")">Learner</option>
+            <option value="Admin" selected="@(Model.Role == "Admin")">Admin</option>
+        </select>
+        <button type="submit" class="btn btn-outline-dark">Update Role</button>
+    </form>
+
+    <form asp-action="ToggleActive" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn @(Model.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+            @(Model.IsActive ? "Deactivate Account" : "Activate Account")
+        </button>
+    </form>
+</div>
+
+<a class="btn btn-link mt-4 px-0" asp-action="Index">&larr; Back to all users</a>

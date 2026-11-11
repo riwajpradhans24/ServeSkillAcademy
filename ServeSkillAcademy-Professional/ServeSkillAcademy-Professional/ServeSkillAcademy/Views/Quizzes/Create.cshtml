@@ -1,0 +1,38 @@
+@model QuizFormViewModel
+@{ ViewData["Title"] = "New Quiz"; }
+
+<h6 class="text-muted">@Model.CourseTitle</h6>
+<h1 class="mb-4">New Quiz</h1>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" asp-route-courseId="@Model.CourseId" method="post" style="max-width:700px;">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-4">
+        <label asp-for="PassPercentage" class="form-label"></label>
+        <input asp-for="PassPercentage" type="number" min="1" max="100" class="form-control" style="max-width:150px;" />
+    </div>
+
+    <h5>Questions</h5>
+    <div id="questionsContainer">
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            <partial name="_QuizQuestionEditor" model='(Model.Questions[i], i)' />
+        }
+    </div>
+
+    <button type="button" id="addQuestionBtn" class="btn btn-outline-dark btn-sm mb-4">+ Add Question</button>
+    <br />
+    <button type="submit" class="btn btn-ss-primary">Save Quiz</button>
+    <a asp-action="ForCourse" asp-route-courseId="@Model.CourseId" class="btn btn-link">Cancel</a>
+</form>
+
+<script type="text/template" id="questionTemplate">
+@Html.Raw(await Html.PartialAsync("_QuizQuestionEditor", (new QuizQuestionInput { Options = new List<QuizOptionInput> { new(), new(), new(), new() } }, -1)))
+</script>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

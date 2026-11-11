@@ -1,0 +1,9 @@
+@model Course
+@{ ViewData["Title"] = "Learning Videos — " + Model.Title; }
+<div class="d-flex justify-content-between align-items-center mb-4"><div><span class="eyebrow">VIDEO LIBRARY</span><h1 class="fw-bold">@Model.Title</h1><p class="text-muted mb-0">Publish, reorder and maintain the course video library.</p></div><a class="btn btn-ss-primary" asp-action="Create" asp-route-courseId="@Model.CourseId">+ Add Video</a></div>
+<div class="row g-4">
+@foreach(var v in Model.Videos.OrderBy(x=>x.OrderIndex)){
+<div class="col-md-6 col-xl-4"><div class="card premium-card h-100 border-0"><div class="video-thumb">@if(!string.IsNullOrWhiteSpace(v.ThumbnailUrl)){<img src="@v.ThumbnailUrl" alt="@v.Title" />}else{<span>▶</span>}</div><div class="p-4"><span class="badge bg-soft-green">@v.DurationMinutes min</span><h5 class="mt-3">@v.Title</h5><p class="small text-muted">@(v.Description ?? "No description")</p><div class="d-flex gap-2"><a class="btn btn-sm btn-outline-dark" asp-action="Edit" asp-route-id="@v.VideoId">Edit</a><form asp-action="Delete" asp-route-id="@v.VideoId" method="post" onsubmit="return confirm('Delete this video?');">@Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger">Delete</button></form></div></div></div></div>
+}
+</div>
+@if(!Model.Videos.Any()){<div class="empty-state mt-4"><div class="empty-icon">🎬</div><h4>No learning videos yet</h4><p>Add a YouTube/Vimeo or hosted video URL. Guests can see the library, while enrolled learners can play it.</p></div>}

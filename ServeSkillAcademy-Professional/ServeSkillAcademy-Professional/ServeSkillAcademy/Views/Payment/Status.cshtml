@@ -1,0 +1,15 @@
+@model PaymentTransaction
+@{ ViewData["Title"] = "Payment Status"; }
+<div class="container py-5">
+    <div class="col-lg-7 mx-auto card border-0 shadow-sm rounded-4 p-5 text-center">
+        <div class="display-3 mb-3">@(Model.Status == "Approved" ? "🎉" : "⏳")</div>
+        <h2>@Model.Course?.Title</h2>
+        <p class="text-muted">Payment method: <strong>@Model.PaymentMethod</strong></p>
+        <p class="display-6 fw-bold">NPR @Model.Amount.ToString("N0")</p>
+        <span class="badge @(Model.Status == "Approved" ? "bg-success" : "bg-warning text-dark") fs-6 px-3 py-2">@Model.Status</span>
+        @if (Model.Status == "Approved")
+        { <a class="btn btn-ss-primary mt-4" asp-controller="Learner" asp-action="Lesson" asp-route-courseId="@Model.CourseId">Start Course</a> }
+        else
+        { <a class="btn btn-outline-dark mt-4" asp-controller="Home" asp-action="Courses">Back to Courses</a> }
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model List<Course>
+@{ ViewData["Title"] = "Manage Courses"; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Manage Courses</h1>
+    <a class="btn btn-ss-primary" asp-action="Create">+ New Course</a>
+</div>
+
+<table class="table table-hover bg-white align-middle">
+    <thead><tr><th>Title</th><th>Category</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Title</td>
+                <td>@c.Category?.Name</td>
+                <td>
+                    @if (c.IsPublished)
+                    {
+                        <span class="badge bg-success">Published</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Draft</span>
+                    }
+                </td>
+                <td class="d-flex gap-1 flex-wrap">
+                    <a class="btn btn-sm btn-outline-dark" asp-action="Edit" asp-route-id="@c.CourseId">Edit</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-controller="Lessons" asp-action="ForCourse" asp-route-courseId="@c.CourseId">Lessons</a>
+                    <a class="btn btn-sm btn-outline-warning" asp-controller="Quizzes" asp-action="ForCourse" asp-route-courseId="@c.CourseId">Quizzes</a>
+                    <a class="btn btn-sm btn-outline-success" asp-controller="Videos" asp-action="ForCourse" asp-route-courseId="@c.CourseId">Videos</a>
+                    <form asp-action="TogglePublish" asp-route-id="@c.CourseId" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-success">@(c.IsPublished ? "Unpublish" : "Publish")</button>
+                    </form>
+                    <form asp-action="Delete" asp-route-id="@c.CourseId" method="post" class="d-inline" onsubmit="return confirm('Delete this course and all its content?');">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (int p = 1; p <= ViewBag.TotalPages; p++)
+            {
+                <li class="page-item @(p == ViewBag.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

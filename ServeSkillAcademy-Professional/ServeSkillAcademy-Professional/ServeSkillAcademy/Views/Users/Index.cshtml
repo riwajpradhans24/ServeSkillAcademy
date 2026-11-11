@@ -1,0 +1,44 @@
+@model List<ApplicationUser>
+@{ ViewData["Title"] = "Manage Users"; }
+
+<h1 class="mb-4">Manage Users</h1>
+<table class="table table-hover bg-white">
+    <thead>
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.FullName</td>
+                <td>@u.Email</td>
+                <td>@u.Role</td>
+                <td>
+                    @if (u.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Deactivated</span>
+                    }
+                </td>
+                <td><a class="btn btn-sm btn-outline-dark" asp-action="Details" asp-route-id="@u.Id">Manage</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (int p = 1; p <= ViewBag.TotalPages; p++)
+            {
+                <li class="page-item @(p == ViewBag.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

@@ -1,0 +1,367 @@
+@model Lesson
+
+@{
+    ViewData["Title"] = Model?.Title ?? "Learning";
+
+    var course = ViewBag.Course as Course;
+
+    var completedIds = ViewBag.CompletedIds as List<int> ?? new List<int>();
+
+    var days = course?.Lessons
+        .GroupBy(l => l.DayNumber)
+        .OrderBy(g => g.Key)
+        ?? Enumerable.Empty<IGrouping<int, Lesson>>();
+}
+
+<div class="learning-shell">
+    <div class="container py-4">
+
+        <div class="learning-top">
+
+            <div>
+                <span class="eyebrow">@course?.Title</span>
+
+                <h1>Learning studio</h1>
+
+                <p class="text-muted mb-0">
+                    @ViewBag.CompletedCount of @ViewBag.TotalLessons chapters completed
+                </p>
+            </div>
+
+            <div class="learning-progress">
+
+                <span>
+                    @(course?.DurationDays ?? 0)-day pathway
+                </span>
+
+                <div class="progress">
+                    <div class="progress-bar"
+                         style="width:@(course?.Lessons.Count > 0 ? (ViewBag.CompletedCount * 100 / course.Lessons.Count) : 0)%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4 mt-2">
+
+            <!-- COURSE CURRICULUM -->
+            <div class="col-lg-4">
+
+                <aside class="curriculum-panel sticky-top" style="top:88px">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Course curriculum</strong>
+
+                        <span class="small text-muted">
+                            @course?.Lessons.Count chapters
+                        </span>
+                    </div>
+
+
+                    @foreach (var day in days)
+                    {
+                        <div class="curriculum-day">
+
+                            <div class="day-label">
+                                DAY @day.Key
+                            </div>
+
+
+                            @foreach (var l in day.OrderBy(x => x.OrderIndex))
+                            {
+                                var done = completedIds.Contains(l.LessonId);
+
+                                <a class="curriculum-item @(l.LessonId == ViewBag.CurrentLessonId ? "active" : "")"
+                                   asp-action="Lesson"
+                                   asp-route-courseId="@course!.CourseId"
+                                   asp-route-lessonId="@l.LessonId">
+
+                                    <span class="chapter-dot @(done ? "done" : "")">
+                                        @(done ? "✓" : (((l.OrderIndex - 1) % 3) + 1))
+                                    </span>
+
+                                    <span>
+                                        <strong>@l.Chapter</strong>
+
+                                        <small>
+                                            @l.Title · @l.EstimatedMinutes min
+                                        </small>
+                                    </span>
+
+                                </a>
+                            }
+
+                        </div>
+                    }
+
+
+                    <div class="curriculum-assessment">
+
+                        @foreach (var q in course?.Quizzes ?? new List<Quiz>())
+                        {
+                            <a asp-action="TakeQuiz"
+                               asp-route-quizId="@q.QuizId">
+
+                                🧠 Final assessment
+                                <span>→</span>
+
+                            </a>
+                        }
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+
+            <!-- LESSON CONTENT -->
+            <div class="col-lg-8">
+
+                @if (Model == null)
+                {
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📚
+                        </div>
+
+                        <h3>No chapter selected</h3>
+
+                    </div>
+                }
+                else
+                {
+                    <article class="lesson-paper">
+
+                        <div class="lesson-kicker">
+                            DAY @Model.DayNumber ·
+                            CHAPTER @(((Model.OrderIndex - 1) % 3) + 1)
+                        </div>
+
+
+                        <h2>
+                            @Model.Title
+                        </h2>
+
+
+                        <p class="lesson-subtitle">
+                            @Model.Chapter ·
+                            @Model.EstimatedMinutes minute guided study
+                        </p>
+
+
+                        <!-- FIXED CONTENT LINE -->
+                        <div class="lesson-rich-content">
+                            @Html.Raw(
+                                Model.Content
+                                    .Replace("\r\n", "<br/><br/>")
+                                    .Replace("\n", "<br/><br/>")
+                            )
+                        </div>
+
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl"
+                                 class="lesson-image"
+                                 alt="@Model.Title" />
+                        }
+
+
+                        @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
+                        {
+                            <div class="embedded-media">
+
+                                <div class="eyebrow">
+                                    CHAPTER VIDEO
+                                </div>
+
+                                <a href="@Model.VideoUrl"
+                                   target="_blank"
+                                   rel="noopener">
+
+                                    Open lesson video ↗
+
+                                </a>
+
+                            </div>
+                        }
+
+
+                        <div class="practice-box">
+
+                            <div class="practice-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Practice before you continue
+                                </strong>
+
+                                <p class="mb-0">
+                                    Write down one action you would take
+                                    in a real workplace situation related
+                                    to this chapter. Use the next chapter
+                                    only after you can explain the reasoning
+                                    behind your answer.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        @if (completedIds.Contains(Model.LessonId))
+                        {
+                            <div class="completed-banner">
+
+                                ✓ Chapter completed — you can revisit it anytime.
+
+                            </div>
+                        }
+                        else
+                        {
+                            <form asp-action="MarkComplete"
+                                  method="post"
+                                  class="mt-4">
+
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden"
+                                       name="courseId"
+                                       value="@course?.CourseId" />
+
+                                <input type="hidden"
+                                       name="lessonId"
+                                       value="@Model.LessonId" />
+
+                                <button class="btn btn-ss-primary btn-lg">
+
+                                    Mark chapter complete →
+
+                                </button>
+
+                            </form>
+                        }
+
+
+                        @if ((bool)ViewBag.CourseLessonsComplete)
+                        {
+                            <div class="completion-panel mt-4">
+
+                                <div class="completion-medal">
+                                    🏅
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        All chapters complete
+                                    </h4>
+
+                                    <p>
+                                        You have completed the learning
+                                        pathway. Take the final assessment
+                                        to unlock your certification badge.
+                                    </p>
+
+
+                                    @foreach (var q in course?.Quizzes ?? new List<Quiz>())
+                                    {
+                                        <a class="btn btn-ss-primary"
+                                           asp-action="TakeQuiz"
+                                           asp-route-quizId="@q.QuizId">
+
+                                            Take final assessment
+
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </article>
+                }
+
+
+                <!-- VIDEO LIBRARY -->
+                <section class="video-section mt-4">
+
+                    <div class="eyebrow">
+                        COURSE VIDEO LIBRARY
+                    </div>
+
+                    <h3>
+                        Learning videos
+                    </h3>
+
+
+                    <div class="row g-3">
+
+                        @foreach (var v in course?.Videos ?? new List<Video>())
+                        {
+                            <div class="col-md-6">
+
+                                <div class="video-card">
+
+                                    <div class="video-thumb">
+
+                                        @if (!string.IsNullOrWhiteSpace(v.ThumbnailUrl))
+                                        {
+                                            <img src="@v.ThumbnailUrl"
+                                                 alt="@v.Title" />
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                ▶
+                                            </span>
+                                        }
+
+                                    </div>
+
+
+                                    <div class="p-3">
+
+                                        <strong>
+                                            @v.Title
+                                        </strong>
+
+                                        <p class="small text-muted">
+                                            @v.DurationMinutes min ·
+                                            @v.Description
+                                        </p>
+
+                                        <a class="btn btn-sm btn-ss-primary"
+                                           asp-action="Video"
+                                           asp-route-id="@v.VideoId">
+
+                                            Watch video
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

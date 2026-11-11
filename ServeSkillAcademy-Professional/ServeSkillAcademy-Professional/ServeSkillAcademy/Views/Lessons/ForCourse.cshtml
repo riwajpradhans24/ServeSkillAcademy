@@ -1,0 +1,42 @@
+@model Course
+@{ ViewData["Title"] = "Lessons — " + Model.Title; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h6 class="text-muted mb-0">@Model.Title</h6>
+        <h1>Lessons</h1>
+    </div>
+    <a class="btn btn-ss-primary" asp-action="Create" asp-route-courseId="@Model.CourseId">+ New Lesson</a>
+</div>
+
+<table class="table table-hover bg-white">
+    <thead><tr><th>Day</th><th>Chapter</th><th>Title</th><th>Study time</th><th>Media</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var l in Model.Lessons.OrderBy(x => x.OrderIndex))
+        {
+            <tr>
+                <td><span class="badge bg-soft-green">Day @l.DayNumber</span></td>
+                <td class="small fw-semibold">@l.Chapter</td>
+                <td>@l.Title</td>
+                <td>@l.EstimatedMinutes min</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(l.ImageUrl)) { <span class="badge bg-info me-1">Image</span> }
+                    @if (!string.IsNullOrEmpty(l.VideoUrl)) { <span class="badge bg-primary me-1">Video</span> }
+                    @if (!string.IsNullOrEmpty(l.AudioUrl)) { <span class="badge bg-secondary">Audio</span> }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-outline-dark" asp-action="Edit" asp-route-id="@l.LessonId">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@l.LessonId" method="post" class="d-inline" onsubmit="return confirm('Delete this lesson?');">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (!Model.Lessons.Any())
+{
+    <p class="text-muted">No lessons yet — add the first one.</p>
+}
+<a class="btn btn-link px-0" asp-controller="Courses" asp-action="Index">&larr; Back to all courses</a>
